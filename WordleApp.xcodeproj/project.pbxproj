@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		DA1D9F0E2EA005D400C9F07C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA1D9F092EA005D400C9F07C /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		DA3E5D472E9EFC9D00A015DE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,15 +28,31 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DA1D9F092EA005D400C9F07C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA3E5D392E9EFC9B00A015DE /* WordleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WordleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA3E5D462E9EFC9D00A015DE /* WordleAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WordleAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA3E5D502E9EFC9D00A015DE /* WordleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WordleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		DA3E5D3B2E9EFC9B00A015DE /* WordleApp */ = {
+		DA1D9F1C2EA02B5300C9F07C /* App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = WordleApp;
+			path = App;
+			sourceTree = "<group>";
+		};
+		DA1D9F1D2EA02B5A00C9F07C /* Model */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DA1D9F1E2EA02B6700C9F07C /* ViewModel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		DA1D9F1F2EA02B6D00C9F07C /* View */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = View;
 			sourceTree = "<group>";
 		};
 		DA3E5D492E9EFC9D00A015DE /* WordleAppTests */ = {
@@ -75,7 +95,11 @@
 		DA3E5D302E9EFC9B00A015DE = {
 			isa = PBXGroup;
 			children = (
-				DA3E5D3B2E9EFC9B00A015DE /* WordleApp */,
+				DA1D9F092EA005D400C9F07C /* Assets.xcassets */,
+				DA1D9F1F2EA02B6D00C9F07C /* View */,
+				DA1D9F1E2EA02B6700C9F07C /* ViewModel */,
+				DA1D9F1D2EA02B5A00C9F07C /* Model */,
+				DA1D9F1C2EA02B5300C9F07C /* App */,
 				DA3E5D492E9EFC9D00A015DE /* WordleAppTests */,
 				DA3E5D532E9EFC9D00A015DE /* WordleAppUITests */,
 				DA3E5D3A2E9EFC9B00A015DE /* Products */,
@@ -108,7 +132,10 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				DA3E5D3B2E9EFC9B00A015DE /* WordleApp */,
+				DA1D9F1C2EA02B5300C9F07C /* App */,
+				DA1D9F1D2EA02B5A00C9F07C /* Model */,
+				DA1D9F1E2EA02B6700C9F07C /* ViewModel */,
+				DA1D9F1F2EA02B6D00C9F07C /* View */,
 			);
 			name = WordleApp;
 			packageProductDependencies = (
@@ -212,6 +239,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA1D9F0E2EA005D400C9F07C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

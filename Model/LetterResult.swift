@@ -5,4 +5,6 @@
 //  Created by Doğa Erdemir on 15.10.2025.
 //
 
-
+enum LetterResult {
+    case none, correct, misplaced, wrong
+}
