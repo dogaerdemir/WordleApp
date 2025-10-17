@@ -103,7 +103,7 @@ struct GameView: View {
     }
     
     private func keyButton(_ letter: String, width: CGFloat) -> some View {
-        let isDisabled = viewModel.eliminatedLetters.contains(letter.uppercased())
+        let isEliminated = viewModel.eliminatedLetters.contains(letter.uppercased())
         
         return Button {
             viewModel.addLetter(letter)
@@ -111,11 +111,10 @@ struct GameView: View {
             Text(letter)
                 .font(.system(size: 18, weight: .semibold))
                 .frame(width: width, height: 50)
-                .background(isDisabled ? Color.gray.opacity(0.3) : Color.gray)
+                .background(isEliminated ? Color.gray.opacity(0.25) : Color.gray)
                 .foregroundColor(.white)
                 .cornerRadius(10)
         }
-        .disabled(isDisabled)
     }
     
     private func keyWidth(for row: [String], geo: GeometryProxy) -> CGFloat {

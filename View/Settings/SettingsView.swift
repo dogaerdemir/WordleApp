@@ -50,16 +50,16 @@ struct SettingsView: View {
                 .padding(.top, 16)
                 
                 HStack {
-                    Text("Elenen Harfleri Kapat").font(.system(size: 15))
+                    Text("Hatalı Harfleri Soluklaştır").font(.system(size: 15))
                     Spacer()
-                    Toggle("", isOn: $settings.disableEliminatedLetters)
+                    Toggle("", isOn: $settings.disableLetters)
                         .labelsHidden()
                 }
                 .padding(.horizontal, 24)
                 .padding(.top, 16)
                 
                 HStack {
-                    Text("Süre Sınırı Aktif").font(.system(size: 15))
+                    Text("Süre Sınırı Ayarla").font(.system(size: 15))
                     Spacer()
                     Toggle("", isOn: $settings.hasTimeLimit)
                         .labelsHidden()

@@ -23,15 +23,15 @@ final class WordleViewModel: ObservableObject {
     private var timer: AnyCancellable?
     private let settings: GameSettings
     private let words: [String]
+    private let normalizedWords: Set<String>
     
-    init(settings: GameSettings, words: [String]) {
+    init(settings: GameSettings, words: [String], startTimerImmediately: Bool = true) {
         self.settings = settings
         self.words = words
-        self.board = Array(repeating: Array(repeating: LetterBox(), count: settings.wordLength),
-                           count: settings.guessLimit)
+        self.board = Array(repeating: Array(repeating: LetterBox(), count: settings.wordLength), count: settings.guessLimit)
         self.targetWord = words.filter { $0.count == settings.wordLength }.randomElement()?.uppercased() ?? "APPLE"
-        
-        if settings.hasTimeLimit {
+        self.normalizedWords = Set(words.map { WordleViewModel.normalize($0) })
+        if startTimerImmediately, settings.hasTimeLimit {
             startTimer(minutes: settings.timeLimit)
         }
     }
@@ -50,6 +50,12 @@ final class WordleViewModel: ObservableObject {
                     self.timer?.cancel()
                 }
             }
+    }
+    
+    private static func normalize(_ s: String) -> String {
+        let lowered = s.lowercased(with: Locale(identifier: "tr_TR"))
+        let noMarks = lowered.folding(options: .diacriticInsensitive, locale: Locale(identifier: "tr_TR"))
+        return noMarks.precomposedStringWithCanonicalMapping
     }
     
     func formattedTime() -> String {
@@ -72,8 +78,9 @@ final class WordleViewModel: ObservableObject {
     func submitGuess() {
         guard currentCol == settings.wordLength else { return }
         
-        let guess = board[currentRow].map { $0.character }.joined().lowercased()
-        guard words.contains(guess) else {
+        let guessRaw = board[currentRow].map { $0.character }.joined()
+        let guess = WordleViewModel.normalize(guessRaw)
+        guard normalizedWords.contains(guess) else {
             invalidWordAlert = true
             return
         }
@@ -81,7 +88,8 @@ final class WordleViewModel: ObservableObject {
         let result = evaluateGuess(guess.uppercased())
         for i in 0..<settings.wordLength {
             board[currentRow][i].result = result[i]
-            if settings.disableEliminatedLetters && result[i] == .wrong {
+            
+            if settings.disableLetters && result[i] == .wrong {
                 eliminatedLetters.insert(board[currentRow][i].character)
             }
         }
@@ -99,19 +107,30 @@ final class WordleViewModel: ObservableObject {
         }
     }
     
-    private func evaluateGuess(_ guess: String) -> [LetterResult] {
+    func evaluateGuess(_ guess: String) -> [LetterResult] {
         var result = Array(repeating: LetterResult.wrong, count: settings.wordLength)
-        let targetArray = Array(targetWord)
+        var targetArray = Array(targetWord)
         let guessArray = Array(guess)
         
         for i in 0..<settings.wordLength {
             if guessArray[i] == targetArray[i] {
                 result[i] = .correct
-            } else if targetArray.contains(guessArray[i]) {
+                targetArray[i] = "*"
+            }
+        }
+        
+        for i in 0..<settings.wordLength {
+            if result[i] == .correct { continue }
+            if let idx = targetArray.firstIndex(of: guessArray[i]) {
                 result[i] = .misplaced
+                targetArray[idx] = "*"
             }
         }
         
         return result
+    }
+    
+    deinit {
+        timer?.cancel()
     }
 }
