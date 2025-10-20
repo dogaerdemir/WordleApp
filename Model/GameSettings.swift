@@ -10,5 +10,5 @@ struct GameSettings {
     var guessLimit: Int = 5
     var hasTimeLimit: Bool = false
     var timeLimit: Int = 3
-    var disableLetters: Bool = false
+    var highlightLetters: Bool = true
 }

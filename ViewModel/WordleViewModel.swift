@@ -19,11 +19,15 @@ final class WordleViewModel: ObservableObject {
     @Published var invalidWordAlert = false
     @Published var timeRemaining: Int?
     @Published var eliminatedLetters: Set<String> = []
+    @Published var gameResult: GameResult? = nil
+    @Published var correctLetters: Set<String> = []
     
     private var timer: AnyCancellable?
     private let settings: GameSettings
     private let words: [String]
     private let normalizedWords: Set<String>
+    
+    var highlightEnabled: Bool { settings.highlightLetters }
     
     init(settings: GameSettings, words: [String], startTimerImmediately: Bool = true) {
         self.settings = settings
@@ -86,23 +90,36 @@ final class WordleViewModel: ObservableObject {
         }
         
         let result = evaluateGuess(guess.uppercased())
+        
+        var correctThisRow = Set<String>()
         for i in 0..<settings.wordLength {
             board[currentRow][i].result = result[i]
-            
-            if settings.disableLetters && result[i] == .wrong {
-                eliminatedLetters.insert(board[currentRow][i].character)
+            let ch = board[currentRow][i].character.uppercased()
+            if result[i] == .correct { correctThisRow.insert(ch) }
+        }
+        correctLetters.formUnion(correctThisRow)
+        
+        if settings.highlightLetters {
+            for i in 0..<settings.wordLength {
+                let ch = board[currentRow][i].character.uppercased()
+                if result[i] == .wrong && !correctThisRow.contains(ch) && !correctLetters.contains(ch) {
+                    eliminatedLetters.insert(ch)
+                }
             }
+            eliminatedLetters.subtract(correctLetters)
         }
         
         if guess.uppercased() == targetWord {
             gameOver = true
             timer?.cancel()
+            gameResult = .won
         } else {
             currentRow += 1
             currentCol = 0
             if currentRow == settings.guessLimit {
                 gameOver = true
                 timer?.cancel()
+                gameResult = .lost
             }
         }
     }

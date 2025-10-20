@@ -14,7 +14,7 @@ struct SettingsView: View {
     
     var body: some View {
         ZStack {
-            Color(.systemGray6).ignoresSafeArea()
+            Color(.bgMain).ignoresSafeArea()
             
             VStack(spacing: 24) {
                 Text("Ayarlar")
@@ -50,9 +50,9 @@ struct SettingsView: View {
                 .padding(.top, 16)
                 
                 HStack {
-                    Text("Hatalı Harfleri Soluklaştır").font(.system(size: 15))
+                    Text("İlgili Harfleri Belirt").font(.system(size: 15))
                     Spacer()
-                    Toggle("", isOn: $settings.disableLetters)
+                    Toggle("", isOn: $settings.highlightLetters)
                         .labelsHidden()
                 }
                 .padding(.horizontal, 24)
@@ -99,7 +99,9 @@ struct SettingsView: View {
                             .font(.system(size: 18, weight: .semibold))
                             .frame(maxWidth: .infinity, minHeight: 54)
                     }
-                    .buttonStyle(.borderedProminent)
+                    .background(Color(.bgButtonBlue))
+                    .foregroundStyle(Color(.white))
+                    .cornerRadius(14)
                     .padding(.horizontal, 24)
                     .padding(.bottom, 16)
                     
@@ -113,4 +115,8 @@ struct SettingsView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
     }
+}
+
+#Preview {
+    SettingsView()
 }

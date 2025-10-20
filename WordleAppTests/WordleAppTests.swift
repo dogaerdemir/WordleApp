@@ -94,7 +94,7 @@ final class WordleAppTests: XCTestCase {
     
     func testEliminatedLettersAdded() {
         var settings = GameSettings()
-        settings.disableLetters = true
+        settings.highlightLetters = true
         
         let viewModel = WordleViewModel(settings: settings, words: ["kalem", "bursa"], startTimerImmediately: false)
         viewModel.targetWord = "KALEM"
@@ -118,7 +118,7 @@ final class WordleAppTests: XCTestCase {
     
     func testDictionaryLookupHandlesCapitalIDotted() async {
         var settings = GameSettings()
-        settings.disableLetters = false
+        settings.highlightLetters = false
         let vm = WordleViewModel(settings: settings, words: ["terim"], startTimerImmediately: false)
         vm.targetWord = "KALem".uppercased()
         
